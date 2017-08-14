@@ -1,0 +1,4 @@
+name: TelegramConsole
+version: 1.0
+depend: [TelegramCore]
+main: xyz.raymark.telegramconsole.TelegramConsole
