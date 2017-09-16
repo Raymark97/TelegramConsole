@@ -34,7 +34,7 @@ public class TelegramConsole extends JavaPlugin {
         config.addDefault("token", "insert_here_your_bot_token.");
         config.addDefault("chatid", "insert here your chat id");
         config.addDefault("separed-exceptions", true);
-        config.addDefault("separed-exceptions.chat-id", "insert here your chat id");
+        config.addDefault("separed-exceptions-chatid", "insert here your chat id");
         config.addDefault("show-date", false);
         config.options().copyDefaults(true);
         saveConfig();
@@ -45,7 +45,6 @@ public class TelegramConsole extends JavaPlugin {
 
         try {
             bot = new Bot(token);
-            //Reader
             Thread th = new Thread(() -> {
                 String last = "";
 
@@ -70,9 +69,7 @@ public class TelegramConsole extends JavaPlugin {
                                 String msg = log.getMsg();
 
                                 //Hide date
-                                if (!config.getBoolean("show-date") || error) {
-                                    date = "";
-                                }
+                                if (!config.getBoolean("show-date") || error) date = "";
 
                                 //Collapse starting log
                                 if (level.equalsIgnoreCase("info") && msg.contains("Done")) {
@@ -87,9 +84,8 @@ public class TelegramConsole extends JavaPlugin {
                                 if (error && !errorMatcher.find() && !s.toLowerCase().contains("exception") && !s.contains("at ") && !s.contains(" ~[")) {
                                     error = false;
                                     bot.sendMessage(chatid, String.join("\n", send));
-                                    if(config.getBoolean("separed-exception")) {
-                                        bot.sendMessage(config.getString("separed-exception.chat-id"), String.join("\n", send));
-                                    }
+                                    if (config.getBoolean("separed-exception"))
+                                        bot.sendMessage(config.getString("separed-exception-chatid"), String.join("\n", send));
                                     send.clear();
                                 }
 
@@ -98,7 +94,7 @@ public class TelegramConsole extends JavaPlugin {
 
                                 String output = date + "<b>[" + thread + "/" + level + "]</b> <code>" + msg + "</code>";
 
-                                if (thread == "" && level == "") output = date + msg;
+                                if (thread.equals("") && level.equals("")) output = date + msg;
 
                                 //Message handler
                                 if (starting) {
@@ -111,10 +107,10 @@ public class TelegramConsole extends JavaPlugin {
                                     }
                                 } else if (error) {
                                     send.add("<code>" + s + "</code>");
-                                } else if (msg.contains("CONSOLE issued server command:")) {
-                                    //Do not send this useless message
                                 } else {
-                                    bot.sendMessage(chatid, output);
+                                    //Do not send this useless message
+                                    if (!msg.contains("CONSOLE issued server command:"))
+                                        bot.sendMessage(chatid, output);
                                 }
                                 last = s;
                             }
@@ -134,8 +130,8 @@ public class TelegramConsole extends JavaPlugin {
             }, 100);
         } catch (WebhookException e) {
             Bukkit.getScheduler().runTaskLater(this, () -> {
-                console.sendMessage(RED +"[TelegramConsole] " +  bot.getName() + " already has a webhook set, please remove it by visiting the following link:\n" +
-                        DARK_RED + "https://api.telegram.org/bot"+token+"/setWebHook?url=");
+                console.sendMessage(RED + "[TelegramConsole] " + bot.getName() + " already has a webhook set, please remove it by visiting the following link:\n" +
+                        DARK_RED + "https://api.telegram.org/bot" + token + "/setWebHook?url=");
                 Bukkit.getPluginManager().disablePlugin(this);
             }, 100);
         }
