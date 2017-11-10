@@ -46,14 +46,14 @@ public class TelegramConsole extends JavaPlugin {
             bot = new Bot(token);
             Thread th = new Thread(() -> {
                 String last = "";
-
                 File file = new File("logs/latest.log");
                 boolean starting = true;
                 int count = 0;
-                String chatid = String.valueOf(config.get("chatid"));
+                String chatID = String.valueOf(config.get("chatid"));
                 List<LogMessage> startingSend = new ArrayList<>();
                 List<LogMessage> send = new ArrayList<>();
                 boolean showDate = config.getBoolean("show-date");
+
                 server.getScheduler().scheduleSyncRepeatingTask(this, ()-> {
                     try {
                         if(send.size() > 0) {
@@ -63,13 +63,13 @@ public class TelegramConsole extends JavaPlugin {
                                 message.append("\n").append(logMessage.toFormattedString(showDate));
                                 if (send.size() >= 30) {
                                     if (i % 30 == 0) {
-                                        bot.sendMessage(chatid, message.toString());
+                                        bot.sendMessage(chatID, message.toString());
                                         message = new StringBuilder();
                                     }
                                     i++;
                                 }
                             }
-                            bot.sendMessage(chatid, message.toString());
+                            bot.sendMessage(chatID, message.toString());
                             send.clear();
                         }
                     } catch (InvalidIDException e) {
@@ -90,11 +90,9 @@ public class TelegramConsole extends JavaPlugin {
                                 //Collapse starting log
                                 if (log.getLevel().equalsIgnoreCase("info") && log.getMsg().contains("Done")) {
                                     starting = false;
-                                    String message = "";
-                                    for(LogMessage logMessage : startingSend) {
-                                        message += "\n"+logMessage.toFormattedString(showDate);
-                                    }
-                                    bot.sendMessage(chatid, message);
+                                    StringBuilder message = new StringBuilder();
+                                    for(LogMessage logMessage : startingSend) message.append("\n").append(logMessage.toFormattedString(showDate));
+                                    bot.sendMessage(chatID, message.toString());
                                     count = 0;
                                     startingSend.clear();
                                 }
@@ -104,11 +102,9 @@ public class TelegramConsole extends JavaPlugin {
                                     startingSend.add(log);
                                     count++;
                                     if (count == 30) {
-                                        String message = "";
-                                        for(LogMessage logMessage : startingSend) {
-                                            message += "\n"+logMessage.toFormattedString(showDate);
-                                        }
-                                        bot.sendMessage(chatid, message);
+                                        StringBuilder message = new StringBuilder();
+                                        for(LogMessage logMessage : startingSend) message.append("\n").append(logMessage.toFormattedString(showDate));
+                                        bot.sendMessage(chatID, message.toString());
                                         startingSend.clear();
                                         count = 0;
                                     }

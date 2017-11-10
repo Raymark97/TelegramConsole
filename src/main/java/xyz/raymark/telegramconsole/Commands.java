@@ -26,15 +26,17 @@ public class Commands implements Listener {
             String message = e.getMessage().getText();
             if (message.charAt(0) == '/' && message.length() > 1) {
                 String cmd = message.substring(1);
+                //TODO fix tgcore, work in progress
+                /*
                 if(cmd.equalsIgnoreCase("tgmenu")) {
                     plugin.bot.sendMessage(chatid, new InlineKeyboardMarkup()
                             .addRow(new InlineKeyboardButton("bottone 1"), new InlineKeyboardButton("bottone 2"))
                             .addRow(new InlineKeyboardButton("bottone 3"), new InlineKeyboardButton("bottone 4"))
                             .addRow(new InlineKeyboardButton("bottone 5"), new InlineKeyboardButton("bottone 6"))
                             , "Menu: ");
-                }
-                plugin.server.dispatchCommand(plugin.console, message.substring(1));
-                plugin.console.sendMessage("[Telegram] Command: "+message.substring(1));
+                }*/
+                plugin.server.dispatchCommand(plugin.console, cmd);
+                plugin.console.sendMessage("[Telegram] Command: "+cmd);
             }
         }
     }
