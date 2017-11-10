@@ -13,14 +13,11 @@ TODO expand description
 - Done! you can start using your server console on Telegram
 
 ### Commands
-TODO Description
-#### In-game
-- TODO in-game commands list
-#### Telegram
-- TODO telegram commands list
+Here's a list of commands avaiable (only for admin)
+  #### In-game
+  - TODO in-game commands list
+  #### Telegram
+  - tgmenu - Opens a menu of settings
 
-### TODO LIST
-- [x] 1
-- [x] 2
-- [x] 3
-- [ ] 4
+### TODO List
+- [x] Develop this plugin
