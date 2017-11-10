@@ -1,8 +1,5 @@
 package xyz.raymark.telegramconsole;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -64,5 +61,15 @@ class LogMessage {
 
     String getThread() {
         return thread;
+    }
+
+    void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    String toFormattedString(boolean showDate) {
+        if(!showDate) date = "";
+        if(thread.equals("") && level.equals("")) return "<code>" + msg + "</code>";
+        return date + "<b>[" + thread + "/" + level + "]</b> <code>" + msg + "</code>";
     }
 }
