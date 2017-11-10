@@ -14,10 +14,18 @@ TODO expand description
 
 ### Commands
 Here's a list of commands avaiable (only for admin)
-  #### In-game
-  - TODO in-game commands list
-  #### Telegram
-  - tgmenu - Opens a menu of settings
+
+Command | Description
+------------ | -------------
+**In-game**
+command1 | description
+command2 | description
+command3 | description
+**Telegram**
+tgmenu | opens settings' menu
+command2 | description
+command3 | description
+
 
 ### TODO List
 - [x] Develop this plugin
