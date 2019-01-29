@@ -8,10 +8,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import xyz.raymark.tgsuite.tgcore.BotNotFoundException;
 import xyz.raymark.tgsuite.tgcore.TelegramCore;
 
+@SuppressWarnings("unused")
 public class TelegramConsole extends JavaPlugin {
-    Server server = getServer();
-    ConsoleCommandSender console = server.getConsoleSender();
-    FileConfiguration config = getConfig();
+    private Server server = getServer();
+    private ConsoleCommandSender console = server.getConsoleSender();
+    private FileConfiguration config = getConfig();
 
     @Override
     public void onEnable() {

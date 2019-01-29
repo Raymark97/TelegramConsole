@@ -20,7 +20,7 @@ public class ConsoleReader implements Runnable {
     private boolean separedExceptions;
     private String separedExceptionChatId;
 
-    public ConsoleReader(String chatid, boolean showDate, boolean separedExceptions, String separedExceptionsChat) {
+    ConsoleReader(String chatid, boolean showDate, boolean separedExceptions, String separedExceptionsChat) {
         this.chatid = chatid;
         this.showDate = showDate;
         this.separedExceptions = separedExceptions;
