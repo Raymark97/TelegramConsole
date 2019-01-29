@@ -31,7 +31,7 @@ public class TelegramConsole extends JavaPlugin {
                 if (textMessage.getChat().getId() == config.getLong("chatid")) {
                     String message = textMessage.getText().toHtmlString();
                     if (message.charAt(0) == '/' && message.length() > 1) {
-                        server.dispatchCommand(console, message.substring(1));
+                        Bukkit.getScheduler().callSyncMethod( this, () -> Bukkit.dispatchCommand(console, message.substring(1)));
                     }
                 }
             });
