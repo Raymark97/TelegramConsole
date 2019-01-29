@@ -1,6 +1,7 @@
 package xyz.raymark.telegramconsole;
 
 import io.github.ageofwar.telejam.methods.SendMessage;
+import io.github.ageofwar.telejam.text.Text;
 import xyz.raymark.tgsuite.tgcore.BotNotFoundException;
 import xyz.raymark.tgsuite.tgcore.TelegramCore;
 import xyz.raymark.tgsuite.tgcore.TelegramCoreBot;
@@ -13,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static io.github.ageofwar.telejam.text.Text.parseHtml;
 
 public class ConsoleReader implements Runnable {
     private String chatid;
@@ -59,7 +62,7 @@ public class ConsoleReader implements Runnable {
                         //Collapse starting log
                         if (level.equalsIgnoreCase("info") && msg.contains("Done")) {
                             starting = false;
-                            SendMessage sendMessage = new SendMessage().chat(chatid).text(String.join("\n", send));
+                            SendMessage sendMessage = new SendMessage().chat(chatid).text(parseHtml(String.join("\n", send)));
                             bot.execute(sendMessage);
                             count = 0;
                             send.clear();
@@ -69,10 +72,10 @@ public class ConsoleReader implements Runnable {
                         Matcher errorMatcher = Pattern.compile("\\.java:\\d").matcher(s);
                         if (error && !errorMatcher.find() && !s.toLowerCase().contains("exception") && !s.contains("at ") && !s.contains(" ~[")) {
                             error = false;
-                            SendMessage sendMessage = new SendMessage().chat(chatid).text(String.join("\n", send));
+                            SendMessage sendMessage = new SendMessage().chat(chatid).text(parseHtml(String.join("\n", send)));
                             bot.execute(sendMessage);
                             if (separedExceptions) {
-                                SendMessage sendmsg = new SendMessage().chat(separedExceptionChatId).text(String.join("\n", send));
+                                SendMessage sendmsg = new SendMessage().chat(separedExceptionChatId).text(parseHtml(String.join("\n", send)));
                                 bot.execute(sendmsg);
                             }
                             send.clear();
@@ -90,7 +93,7 @@ public class ConsoleReader implements Runnable {
                             send.add(output);
                             count++;
                             if (count == 30) {
-                                SendMessage sendMessage = new SendMessage().chat(chatid).text(String.join("\n", send));
+                                SendMessage sendMessage = new SendMessage().chat(chatid).text(parseHtml(String.join("\n", send)));
                                 bot.execute(sendMessage);
                                 send.clear();
                                 count = 0;
@@ -100,7 +103,7 @@ public class ConsoleReader implements Runnable {
                         } else if (msg.contains("CONSOLE issued server command:")) {
                             //Do not send this useless message
                         } else {
-                            SendMessage sendMessage = new SendMessage().chat(chatid).text(output);
+                            SendMessage sendMessage = new SendMessage().chat(chatid).text(parseHtml(output));
                             bot.execute(sendMessage);
                         }
                         last = s;
