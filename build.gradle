@@ -11,10 +11,11 @@ repositories {
     mavenCentral()
     maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
     maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
+    maven { url = "https://dl.bintray.com/tgsuiteteam/TelegramSuite" }
 }
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compileOnly 'org.spigotmc:spigot-api:1.13.1-R0.1-SNAPSHOT'
-    compile files('libs/tgcore.jar')
+    compileOnly 'xyz.raymark.tgsuite:TelegramCore:1.0'
 }
